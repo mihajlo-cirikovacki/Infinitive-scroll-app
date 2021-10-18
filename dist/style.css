@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+/*
+  0 - 600px:       Phone
+  600 - 900px:     Tablet portrait
+  900 - 1200px:    Tablet landscape
+  [1200 - 1800] is where our normal styles apply. > Desktop frst aprouch
+  1800px + :       Big desktop
+*/
+/*
+// Primer code-a kada koristim mixin:
+h1 {
+  @include respond(phone) {
+    font-size: 3rem;
+  }; 
+};
+*/
+/*
+ Example:
+
+h1 {
+  font-size: rem(33.536);
+}
+
+// In CSS:
+h1 {
+  font-size: 3.3536rem;
+}
+
+*/
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+}
+
+.section-infinite-scroll {
+  background-color: #F9F9F9;
+  padding: 2rem;
+}
+
+.infinite-scroll-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  gap: 2rem;
+}
+
+.img-container {
+  width: 100%;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #959595;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+.img-container:hover .img-container__img {
+  transform: scale(1.05);
+}
+.img-container__likes, .img-container__downloads {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+.img-container__likes span, .img-container__downloads span {
+  font-weight: 700;
+  color: #646464;
+}
+.img-container__likes {
+  margin-left: 1rem;
+}
+.img-container__img {
+  width: 50rem;
+  height: 20rem;
+  object-fit: cover;
+  grid-column: 1/span 2;
+  transition: all 400ms ease-out;
+}
+.img-container__icon {
+  width: 3rem;
+}
+
+.profile-box {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.profile-box__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #646464;
+}
+.profile-box__img {
+  width: 5rem;
+  border-radius: 50%;
+  margin-left: 1rem;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  transition: opacity 300ms ease-in;
+  opacity: 0;
+  margin: 2rem 0;
+}
+
+.loader.show {
+  opacity: 1;
+}
+
+.circle {
+  background-color: red;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  margin: 0.6rem;
+  animation: upDown 500ms ease-in infinite;
+}
+
+.circle:nth-of-type(2) {
+  animation-delay: 100ms;
+}
+
+.circle:nth-of-type(3) {
+  animation-delay: 200ms;
+}
+
+@keyframes upDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,22 @@
+@use "sass:math";
+
+// Source: https://css-tricks.com/snippets/sass/px-to-em-functions/
+// Convert pixels to rems, for precise measurement (pixel perfect) 
+@function rem($pixels, $root-px: 10) { // My root is 10px
+  @return (math.div($pixels, $root-px)) * 1rem;
+};
+
+
+/*
+ Example:
+
+h1 {
+  font-size: rem(33.536);
+}
+
+// In CSS:
+h1 {
+  font-size: 3.3536rem;
+}
+
+*/

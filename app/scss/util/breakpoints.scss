@@ -1,0 +1,44 @@
+// MEDIA QUERY MANAGER
+/*
+  0 - 600px:       Phone
+  600 - 900px:     Tablet portrait
+  900 - 1200px:    Tablet landscape
+  [1200 - 1800] is where our normal styles apply. > Desktop frst aprouch
+  1800px + :       Big desktop
+*/
+
+// BREAKPONTS 
+$breakpoints: (
+  'phone': '37.5em', // 600px
+  'tab-port': '56.25em', //  900px
+  'tab-land': '75em', // 1200 px
+);
+
+@mixin respond($size) {
+  @media (max-width: map-get($breakpoints, $size )) {
+    @content;
+  };
+
+  @if $size == 'big-desktop' {
+    @media (min-width: 112.5em) {
+      // Up > 1800px 
+      @content;
+    };
+  } 
+};
+
+/*
+// Primer code-a kada koristim mixin:
+h1 {
+  @include respond(phone) {
+    font-size: 3rem;
+  }; 
+};
+*/
+
+
+
+
+
+
+
