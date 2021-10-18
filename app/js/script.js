@@ -61,7 +61,7 @@ const app = (function() {
     };
   };
 
-  // HANDLING INTERSECT:
+  //  HANDLING INTERSECT:
   const obsOptions = {
     root: null,
     rootMargin: '0px',
