@@ -2,17 +2,21 @@
 
 const app = (function() {
   
+  const header = document.querySelector('.header');
+  const container = document.querySelector('.container');
   const loader = document.querySelector('.loader');
-  const container = document.querySelector('.infinite-scroll-container');
+  const loader2 = document.querySelector('.loader-2');
+  const lightBox = document.querySelector('.lightbox');
+  const close = document.querySelector('.close');
+  const overlay = document.querySelector('.overlay');
+
   const APIKEY = 'FG_lsD6Zlivtgn4xnB6455NlsvDPuLGjBSX-1fG00mY';
   const ENDPOINT = 'https://api.unsplash.com/photos/';
 
-  let page = 1;
-
-  // === FETCH DATA:
-  const getData = async (limit = 12) => {
+  // ========== FETCH DATA:
+  const getData = async (limit = 6) => {
     try {
-      const res = await fetch(`${ENDPOINT}?client_id=${APIKEY}&per_page=${limit}&page=${page}`);
+      const res = await fetch(`${ENDPOINT}?client_id=${APIKEY}&per_page=${limit}`);
       const data = await res.json();
       
       return data;
@@ -22,15 +26,14 @@ const app = (function() {
     };
   };
 
-  // === RENDER:
+  // ==========  RENDER:
   const showLoader = function() {
-    loader.classList.add('show')
+    loader.classList.add('show');
   }
 
   const renderImgs = async () => {
     try {
-      showLoader();
-
+      
       const data = await getData();
       if(!data) throw new Error('Problem with loading data. 💥💥💥');
 
@@ -55,30 +58,86 @@ const app = (function() {
 
         figureEl.insertAdjacentHTML('afterbegin', html );
       });
+
+      showLoader()
       
     } catch(err) {
       console.error(err.message);
     };
   };
 
-  //  HANDLING INTERSECT:
+  // ========== HANDLING INTERSECT:
   const obsOptions = {
     root: null,
     rootMargin: '0px',
-    threshold: 0.25,
+    threshold: 1,
   }
 
   const handleIntersect = function(entries) {
+    console.log(entries);
     const [entry] = entries;
     if (entry.isIntersecting) {
-      page++;
-      renderImgs();
+      setTimeout(() => renderImgs(), 300);
     } 
   }
 
   const observer = new IntersectionObserver(handleIntersect, obsOptions);
   observer.observe(loader); 
 
+
+  // ========== ADD/REMOVES LIGHTBOX/OVERLAY:
+  const removeLightBox = function() {
+    lightBox.classList.add('hidden');
+    overlay.classList.add('hidden');
+    lightBox.querySelector('img').remove();
+  }
+
+  const addLightBox = function() {
+    lightBox.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+    close.classList.remove('hidden')
+  }
+
+  // ==========  EVENT LISTENERS:
+  header.addEventListener('click', (e) => {
+    const currView = e.target.closest('.view');
+    if(!currView) return;
+
+    if (currView.classList.contains('view-list')) {
+      container.classList.remove('container');
+      container.classList.add('view-list');
+    } 
+    if (currView.classList.contains('view-grid')) {
+      container.classList.add('container');
+      container.classList.remove('view-list');
+    }
+  });
+
+  container.addEventListener('click', (e) => {
+    const currImg = e.target.closest('.img-container');
+    if(!currImg) return;
+    
+    const img = currImg.querySelector('.img-container__img');
+    const imgHtml = `
+      <img src="${img.src}" alt="${img.alt}">  
+    `;
+
+    lightBox.insertAdjacentHTML('afterbegin', imgHtml)
+    addLightBox();
+  });
+
+  overlay.addEventListener('click', (e) => {
+    removeLightBox();
+  });
+
+  close.addEventListener('click', (e) => {
+    removeLightBox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') removeLightBox();
+  }); 
+    
   return {
     renderImgs
   }
