@@ -13,13 +13,21 @@
 </head>
 <body>
   <section class="section-infinite-scroll">
-    <main class="infinite-scroll-container">
-    </main>
+    <header class="header">
+      <p>View</p>
+      <img src="/assets/grid.svg" class="view view-grid" alt="view grid">
+      <img src="/assets/list.svg" class="view view-list" alt="view list">
+    </header>
+    <main class="container"></main>
+    <div class="loader">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
   </section>
-  <div class="loader">
-    <div class="circle"></div>
-    <div class="circle"></div>
-    <div class="circle"></div>
+  <div class="lightbox hidden">
+    <span class="close hidden">&times;</span>
   </div>
+  <div class="overlay hidden"></div>
 </body>
 </html>
