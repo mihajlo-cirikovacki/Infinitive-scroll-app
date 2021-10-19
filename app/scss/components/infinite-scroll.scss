@@ -4,6 +4,11 @@
 .section-infinite-scroll {
   background-color: #F9F9F9;
   padding: 2rem;
+
+   // PHONE:
+   @include respond('tab-port') {
+    padding-top: 3rem;
+  }
 }
 
 .header {
@@ -13,6 +18,11 @@
   gap: 1rem;
   font-size: 2.4rem;
   margin-bottom: 2rem;
+
+    // PHONE:
+    @include respond('phone') {
+      display: none;
+    }
 
   & p {
     text-transform: uppercase;
@@ -29,8 +39,28 @@
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 45rem;
   justify-items: center;
   gap: 2rem;
+
+  // TAB-LAND-SM:
+  @include respond('tab-land-sm') {
+    gap: .2rem;
+    row-gap: 2rem;
+    grid-auto-rows: 50rem;
+  }
+
+  // TAB-PORT:
+  @include respond('tab-port') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  // PHONE:
+  @include respond('phone') {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 .view-list {
@@ -38,9 +68,19 @@
   grid-template-columns: .35fr;
   justify-content: center;
   gap: 2.5rem;
+
+   // TAB-LAND-SM:
+   @include respond('tab-land-sm') {
+    grid-template-columns: .5fr;
+  }
+  // TAB-PORT:
+  @include respond('tab-port') {
+    grid-template-columns: .8fr;
+  }
 }
   
 .img-container {
+  width: 100%;
   font-size: 1.6rem;
   font-weight: 500;
   color: #959595;
@@ -55,31 +95,38 @@
   &:hover &__img  {
     transform: scale(1.05);
   }
+
+  &__wraper {
+    grid-column: 1 / span 2;
+  }
   
   &__img {
-    width: 66rem;
+    width: 100%;
     height: 33rem;
     object-fit: cover;
-    grid-column: 1 / span 2;
     transition: all 400ms ease-out;
     cursor: pointer;
+  }
+
+  &__info {
+    grid-column: 1 / span 2;
+    grid-row: 2 / 3;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+
+     // TAB-LAND-SM:
+     @include respond('tab-land-sm') {
+      flex-wrap: wrap;
+     }
   }
 
   &__likes,
   &__downloads {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
 
-    span {
-      font-weight: 700;
-      color: #646464;
-    }
-  }
-
-  &__likes {
-    margin-left: 1rem;
   }
 
   &__icon {
@@ -88,6 +135,8 @@
 }
 
 .profile-box {
+  grid-column: 1 / span 2;
+  grid-row: 3 / 4;
   display: flex;
   align-items: center;
   gap: 2rem;

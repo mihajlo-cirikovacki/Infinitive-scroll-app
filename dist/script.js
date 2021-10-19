@@ -13,10 +13,12 @@ const app = (function() {
   const APIKEY = 'FG_lsD6Zlivtgn4xnB6455NlsvDPuLGjBSX-1fG00mY';
   const ENDPOINT = 'https://api.unsplash.com/photos/';
 
+  let page = 1;
+
   // ========== FETCH DATA:
   const getData = async (limit = 6) => {
     try {
-      const res = await fetch(`${ENDPOINT}?client_id=${APIKEY}&per_page=${limit}`);
+      const res = await fetch(`${ENDPOINT}?client_id=${APIKEY}&per_page=${limit}&page=${page}`);
       const data = await res.json();
       
       return data;
@@ -38,15 +40,18 @@ const app = (function() {
       if(!data) throw new Error('Problem with loading data. 💥💥💥');
 
       data.forEach(data => {
-        const figureEl = document.createElement('figure');
-        figureEl.classList.add('img-container');
-        container.prepend(figureEl);
+        const imgContainer = document.createElement('div');
+        imgContainer.classList.add('img-container');
+        container.prepend(imgContainer);
 
         const html = `
-          <img class="img-container__img" src=${data.urls.full} alt="img">
-
-          <blockquote class="img-container__likes"><img src="/assets/icons-heart-.png" class="img-container__icon" alt="heart icon">Likes:<span>${data.likes}</span></blockquote>
-          <blockquote class="img-container__downloads"><img src="/assets/icons-downloads.png" class="img-container__icon" alt="Download icon">Downloads:<span>${data.height}</span></blockquote>
+          <div class="img-container__wraper">
+            <img class="img-container__img" src=${data.urls.full} alt="img">
+          </div>
+          <div class="img-container__info"> 
+            <div class="img-container__likes"><img src="/assets/icons-heart-.png" class="img-container__icon" alt="heart icon"> Likes: <span>${data.likes}</span></div>
+            <div class="img-container__downloads"><img src="/assets/icons-downloads.png" class="img-container__icon" alt="Download icon"> Downloads: <span>${data.height}</span></div>
+          </div>
           <div class="profile-box">
             <img src=${data.user.profile_image.large} class="profile-box__img">
             <div class="profile-box__info">
@@ -56,7 +61,7 @@ const app = (function() {
           </div>
         `;
 
-        figureEl.insertAdjacentHTML('afterbegin', html );
+        imgContainer.insertAdjacentHTML('afterbegin', html );
       });
 
       showLoader()
@@ -77,7 +82,10 @@ const app = (function() {
     console.log(entries);
     const [entry] = entries;
     if (entry.isIntersecting) {
-      setTimeout(() => renderImgs(), 300);
+      setTimeout(() => {
+        page++;
+        renderImgs(), 300
+      });
     } 
   }
 
